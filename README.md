@@ -7,7 +7,7 @@ In these examples, we’re going to build an chatbot QA app. We’ll learn how t
 - Create a chatbot app with the ability to display sources used to generate an answer
 ---
 
-### Chat with your documents 🚀
+## Chat with your documents 🚀
 - [OpenAI model](https://platform.openai.com/docs/models) as Large Language model
 - [LangChain](https://python.langchain.com/en/latest/modules/models/llms/integrations/huggingface_hub.html) as a Framework for LLM
 - [Chainlit](https://docs.chainlit.io/langchain) for deploying.
