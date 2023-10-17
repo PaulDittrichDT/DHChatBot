@@ -21,4 +21,9 @@ jobs:
       run: pip install -r requirements.txt
 
     - name: Start Web App
-      run: chainlit run pdf_qa.py -w
+      run: |
+        chainlit run pdf_qa.py -w -p 8000 &
+        sleep 5
+        while ! curl -s http://localhost:8000; do
+          sleep 1
+        done
