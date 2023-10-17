@@ -9,43 +9,16 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.x
-          architecture: x64
+    - name: Create and Activate Virtual Environment
+      run: |
+        python3 -m venv .venv
+        source .venv/bin/activate
 
-      - name: Create Virtual Environment
-        run: python3 -m venv .venv
-      - name: Activate Virtual Environment
-        run: source .venv/bin/activate
+    - name: Install Dependencies
+      run: pip install -r requirements.txt
 
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
-
-      - name: Build and Deploy
-        run: |
-          cd docs
-          python -m http.server 8000 &
-          cd ..
-          echo 'Server started'
-          
-          echo 'Waiting for server to start...'
-          sleep 3
-
-          status_code=$(curl --write-out %{http_code} --silent --output /dev/null http://localhost:8000)
-          
-          if [[ "$status_code" == "200" ]]; then
-            echo "Server is running. Deploying..."
-            touch .nojekyll
-            git config --global user.email "you@example.com"
-            git config --global user.name "Your Name"
-            git add .
-            git commit -m "Deploying to GitHub Pages"
-            git push origin main
-            echo "Deployment successful!"
-          else
-            echo "Failed to
+    - name: Start Web App
+      run: chainlit run pdf_qa.py -w
